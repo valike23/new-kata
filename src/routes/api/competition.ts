@@ -1,9 +1,10 @@
 import { createCompetition, Icompetition } from "../../Controllers/competition";
 
 
-export async function get(req, res) {
+export async function post(req, res) {
     try {
         const body: Icompetition = JSON.parse(req.fields.body);
+        console.log(body);
        const resp = await createCompetition(body);
        if(resp.status == 'success'){
         res.json(resp);

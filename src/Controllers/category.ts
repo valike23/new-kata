@@ -44,5 +44,3 @@ Category.init({
     },
 },{sequelize, modelName: 'category'});
 
-
-  Category.belongsTo(Competition);

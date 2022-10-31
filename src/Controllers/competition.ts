@@ -19,8 +19,6 @@ export class Competition extends Model {
     declare id: number;
     declare competitionName: string;
     declare image: string;
-    declare createdAt: Date;
-    declare updatedAt: Date;
 }
 
 Competition.init({
@@ -41,19 +39,12 @@ Competition.init({
         allowNull: true,
 
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-    },
+ 
 },{sequelize, modelName: 'competition'});
 
 
 Competition.hasMany(Category);
-
+Competition.sync();
 export const createCompetition = async (competition: Icompetition)=>{
     try {
      const resp = await   Competition.create(competition as any);
@@ -62,6 +53,7 @@ export const createCompetition = async (competition: Icompetition)=>{
         body: resp
      }
     } catch (error) {
+        console.error(error);
         return {
             status: 'failed',
             body: error
