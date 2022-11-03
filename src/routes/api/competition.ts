@@ -1,4 +1,4 @@
-import { createCompetition, Icompetition } from "../../Controllers/competition";
+import { createCompetition, Icompetition, retrieveAllCompetition } from "../../Controllers/competition";
 
 
 export async function post(req, res) {
@@ -16,5 +16,15 @@ export async function post(req, res) {
     } catch (error) {
         console.log(error);
         res.status(400).json(error);
+    }
+}
+
+export async function get(req, res){
+    try {
+        const resp = await retrieveAllCompetition();
+        res.json(resp);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
     }
 }

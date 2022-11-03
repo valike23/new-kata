@@ -60,3 +60,13 @@ export const createCompetition = async (competition: Icompetition)=>{
         }
     }
 }
+
+export const retrieveAllCompetition  =async (): Promise<Icompetition[]>=> {
+    try {
+       const competitions =await  Competition.findAll();
+       return competitions;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
