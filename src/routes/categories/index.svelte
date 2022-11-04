@@ -3,24 +3,22 @@
     // `{ path, params, query }` object and turns it into
     // the data we need to render the page
     export async function preload(page, session) {
-        const res = await this.fetch(`api/competition`);
-        const competitions = await res.json();
+        const res = await this.fetch(`api/category`);
+        const resp = await res.json();
 
-        return { competitions };
+        return { resp };
     }
 </script>
 
 <script>
-    import {goto} from "@sapper/app";
   import axios from "axios";
   import TopBar from "../../components/TopBar.svelte";
   import { EnotificationType, handleNotification } from "../../functions/browserFunctions";
-    export let competitions = [];
-    competitions = competitions;
-    console.log(competitions);
-    const openAddCompetition = () => {
-       goto('competition/add');
-    };
+    export let resp ;
+    let categories = resp.categories;
+    let activeCompetition = resp.activeComp;
+    console.log(categories);
+ 
 
     const activateCompetition =async (competition, i)=>{
         try {
@@ -43,53 +41,57 @@
     
 </script>
 <svelte:head>
-    <title>Manage Competition</title>
+    <title>Manage Categories</title>
 </svelte:head>
 
 <div class="h-100 container-fluid">
  <TopBar/>
-    <h1>Manage Competition</h1>
+    <h1>Manage Categories</h1>
     <div class="container">
-        <div class="row cell-12 mb-5 pr-5">
-            <button
-                on:click={openAddCompetition}
-                class="button primary float-right">Add Competition</button
-            >
-        </div>
+     <div class="row cell-12">
+        <form class="row">
+          <div class="cell-6">
+            <div class="form-group">
+                <label for="category">Category Name</label>
+                <input type="text" placeholder="category name" class="metro-input"/>
+            </div>
+          </div>
+          <div class="cell-6">
+            <div class="form-group">
+                <label for="category">Category Name</label>
+                <select name="" class="metro-input">
+                    <option disabled>Pick a gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="none">None</option>
+                </select>
+            </div>
+          </div>
+        </form>
+     </div>
         <div class="row">
+          
             <div class="cell-12">
                 <table class="table  cell-hover">
                     <thead>
                         <tr style="color: white">
                             <th style="color:white">#</th>
-                            <th style="color:white">competition Name</th>
+                            <th style="color:white">category Name</th>
                             <th class="" style="color:white">created Date</th>
-                            <th style="color:white">Image</th>
-                            <th style="color:white">Active</th>
+                            <th style="color:white">gender</th>
                             <th style="color:white">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {#each competitions as competition, i}
+                        {#each categories as category, i}
                             <tr>
                                 <td>{i + 1}</td>
-                                <td>{competition.competitionName}</td>
-                                <td>{competition.createdAt}</td>
+                                <td>{category.categoryName}</td>
+                                <td>{category.createdAt}</td>
+                               <td>{category.gender}</td>
+                              
                                 <td
-                                    ><img
-                                        class="img"
-                                        src={competition.image ||
-                                            "images/kata.jpg"}
-                                        alt=""
-                                    /></td
-                                >
-                                <td>{#if competition.active}
-                                    <span class="mif-done mif-2x fg-green"></span>
-                                {:else}
-                                <span class="mif-cross-light mif-2x fg-red "></span>
-                                {/if}</td>
-                                <td
-                                    ><button on:click={()=>{activateCompetition(competition, i)}} class="button primary square " title="make this competition active">
+                                    ><button on:click={()=>{activateCompetition(category, i)}} class="button primary square " title="make this competition active">
                                         <span class="mif-checkmark" />
                                     </button>
                                     <button class="button alert square ">
@@ -104,10 +106,4 @@
         </div>
     </div>
 </div>
-<style>
-    .img {
-        height: 40px;
-        width: 40px;
-    }
 
-</style>

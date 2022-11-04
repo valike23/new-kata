@@ -1,18 +1,23 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { Competition } from "./competition";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: '../../sqlite/test.db'
   });
-
+export interface Icategory {
+    id?: number;
+    categoryName?: string;
+    gender?: string;
+    competitionId?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
   export class Category extends Model {
     declare id: number;
     declare categoryName: string;
     declare competitionId: number;
-     declare createdAt: Date;
-    declare updatedAt: Date;
+    declare gender: string
   };
 
   
@@ -34,13 +39,22 @@ Category.init({
         
 
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-    },
+    gender:{
+        type: DataTypes.STRING,
+        defaultValue: "none"
+    }
+   
 },{sequelize, modelName: 'category'});
+
+Category.sync();
+
+
+export const createCategory = async (category: any)=>{
+    try {
+       const resp = await Category.create(category);
+       return {status: 'success', body: resp}
+    } catch (error) {
+        return {status: 'failed', body: error}
+    }
+}
 

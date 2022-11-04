@@ -14,11 +14,13 @@ export interface Icompetition{
     image?: string;
     createdAt?: Date;
     updatedAt?: Date;
+    active?: boolean
 }
 export class Competition extends Model {
     declare id: number;
     declare competitionName: string;
     declare image: string;
+    declare active: boolean;
 }
 
 Competition.init({
@@ -39,6 +41,10 @@ Competition.init({
         allowNull: true,
 
     },
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
  
 },{sequelize, modelName: 'competition'});
 

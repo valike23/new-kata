@@ -1,70 +1,27 @@
-<script lang="ts">
-	import { onMount } from "svelte";
+<script context="module">
+    // the (optional) preload function takes a
+    // `{ path, params, query }` object and turns it into
+    // the data we need to render the page
+    export async function preload(page, session) {
+        const res = await this.fetch(`api/dashboard`);
+        const dashboard = await res.json();
+		console.log('my dashboard', dashboard);
+        return { dashboard };
+    }
+</script>
+
+<script >
 	import {goto} from "@sapper/app";
-	let win: any = {};
+	export let dashboard;
+	
 	const nav =(page)=>{
 		goto(page)
 	}
-	onMount(() => {
-		win = window;
-		win.$(function () {
-			var setTilesAreaSize = function () {
-				var width =
-					window.innerWidth > 0 ? window.innerWidth : screen.width;
-				var groups = win.$(".tiles-group");
-				var tileAreaWidth = 80;
-				win.$.each(groups, function () {
-					if (width <= win.Metro.media_sizes.LD) {
-						tileAreaWidth = width;
-					} else {
-						tileAreaWidth += win.$(this).outerWidth() + 80;
-					}
-				});
-
-				win.$(".tiles-area").css({
-					width: tileAreaWidth,
-				});
-
-				if (width > win.Metro.media_sizes.LD) {
-					win.$(".start-screen").css({
-						overflow: "auto",
-					});
-				}
-			};
-
-			setTilesAreaSize();
-
-			win.$.each(win.$("[class*=tile-]"), function () {
-				var tile = win.$(this);
-				setTimeout(function () {
-					tile.css({
-						opacity: 1,
-						transform: "scale(1)",
-						transition: ".3s",
-					}).css("transform", false);
-				}, Math.floor(Math.random() * 500));
-			});
-
-			win.$(".tiles-group").animate({
-				left: 0,
-			});
-
-			win.$(window).on(
-				win.Metro.events.resize + "-start-screen-resize",
-				function () {
-					setTilesAreaSize();
-				}
-			);
-
-			win.$(window).on(win.Metro.events.mousewheel, function (e) {
-				var up = e.deltaY < 0 ? -1 : 1;
-				var scrollStep = 50;
-				win.$(".start-screen")[0].scrollLeft += scrollStep * up;
-			});
-		});
-	});
+	
 </script>
-
+<svelte:head>
+	<script defer src="js/dashboard.js"></script>
+</svelte:head>
 <div class="container-fluid start-screen h-100">
 	<h1 class="start-screen-title">Start</h1>
 
@@ -84,21 +41,19 @@
 			>
 				<span class="mif-chrome icon" />
 				<span class="branding-bar">Manage Competition</span>
+				<span class="badge-bottom">{dashboard.competitions}</span>
 			</div>
 			<a
-				href="/competition"
+				href="/categories"
 				data-role="tile"
+				data-size="wide"
 				class="bg-indigo fg-white"
 			>
 				<span class="mif-github icon" />
-				<span class="branding-bar">Github</span>
+				<span class="branding-bar">Categories</span>
 				<span class="badge-bottom">30</span>
 			</a>
-			<div data-role="tile" class="bg-cyan fg-white">
-				<span class="mif-envelop icon" />
-				<span class="branding-bar">Email</span>
-				<span class="badge-bottom">10</span>
-			</div>
+		
 
 			<div data-role="tile" data-size="small">
 				<span class="mif-apple icon" />
@@ -130,7 +85,7 @@
 			class="tiles-grid tiles-group size-2 fg-white"
 			data-group-title="Images"
 		>
-			<div data-role="tile" data-cover="../../images/me.jpg">
+			<div data-role="tile" data-cover="images/kata.jpg">
 				<span class="branding-bar">Sergey Pimenov</span>
 			</div>
 			<div
@@ -138,9 +93,9 @@
 				data-effect="animate-fade"
 				data-effect-duration="1000"
 			>
-				<div class="slide" data-cover="../../images/me2.jpg" />
-				<div class="slide" data-cover="../../images/me.jpg" />
-				<div class="slide" data-cover="../../images/me3.jpg" />
+				<div class="slide" data-cover="images/kata.jpg" />
+				<div class="slide" data-cover="images/kata2.jpeg" />
+				<div class="slide" data-cover="images/kata3.jpeg" />
 				<span class="branding-bar">Gallery</span>
 			</div>
 			<div
@@ -150,9 +105,9 @@
 			>
 				<div class="slide" data-cover="../../images/1.jpg" />
 				<div class="slide" data-cover="../../images/2.jpg" />
-				<div class="slide" data-cover="../../images/3.jpg" />
-				<div class="slide" data-cover="../../images/4.jpg" />
-				<div class="slide" data-cover="../../images/5.jpg" />
+				<div class="slide" data-cover="images/kata.jpg" />
+				<div class="slide" data-cover="images/kata2.jpeg" />
+				<div class="slide" data-cover="images/kata3.jpeg" />
 				<span class="branding-bar">Gallery</span>
 			</div>
 			<div data-role="tile" data-size="wide" data-effect="image-set">
