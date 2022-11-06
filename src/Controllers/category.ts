@@ -1,5 +1,6 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { Entry } from "./entries";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -45,6 +46,8 @@ Category.init({
     }
    
 },{sequelize, modelName: 'category'});
+
+Category.hasMany(Entry);
 
 Category.sync();
 

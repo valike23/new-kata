@@ -16,6 +16,8 @@
   import { EnotificationType, handleNotification } from "../../functions/browserFunctions";
     export let resp ;
     let categories = resp.categories;
+    let loading = false;  
+    let category = {};
     let activeCompetition = resp.activeComp;
     console.log(categories);
  
@@ -37,6 +39,29 @@
             
         }
     }
+
+    const submit =async ()=>{
+        try {
+            loading = true;
+            category.competitionId = activeCompetition.id;
+            handleNotification(window, "uploading category",EnotificationType.INFO);
+            const form = new FormData();
+            form.append('body',JSON.stringify(category));
+            const respData = await (await axios.post(`api/category`, form)).data;
+            console.log(respData);
+            if(respData ){
+                loading = false;
+                category = {};
+                handleNotification(window, "upload is successful",EnotificationType.SUCCESS);
+                console.log(respData);
+                categories.push(respData);
+                categories = categories;
+            }
+        } catch (error) {
+            loading = false;
+            handleNotification(window,"something went wrong", EnotificationType.ERROR);
+        }
+    }
  
     
 </script>
@@ -46,31 +71,46 @@
 
 <div class="h-100 container-fluid">
  <TopBar/>
-    <h1>Manage Categories</h1>
+    <h1>Categories</h1>
     <div class="container">
-     <div class="row cell-12">
-        <form class="row">
+     <div class="row cell-12 mb-5">
+        <h4>Add Category</h4>
+        <p><small>fill the below form to add a category</small></p>
+        <form on:submit|preventDefault={submit} class="row">
           <div class="cell-6">
             <div class="form-group">
                 <label for="category">Category Name</label>
-                <input type="text" placeholder="category name" class="metro-input"/>
+                <input bind:value={category.categoryName} required type="text" placeholder="category name" class="metro-input"/>
             </div>
           </div>
           <div class="cell-6">
             <div class="form-group">
-                <label for="category">Category Name</label>
-                <select name="" class="metro-input">
-                    <option disabled>Pick a gender</option>
+                <label for="category">Category Gender</label>
+                <select bind:value={category.gender} required name="" class="metro-input">
+                    <option selected disabled>Pick a gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="none">None</option>
                 </select>
             </div>
           </div>
+
+          <div class="cell-12 mt-3">
+            {#if loading}
+                
+            <button disabled type="submit" class="button primary float-right">submiting...</button>
+            {:else}
+                
+            <button type="submit" class="button primary float-right">submit</button>
+            {/if}
+          </div>
         </form>
      </div>
+
+
+
         <div class="row">
-          
+          <h4>Manage Categories</h4>
             <div class="cell-12">
                 <table class="table  cell-hover">
                     <thead>
