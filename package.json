@@ -17,7 +17,8 @@
     "sequelize": "^6.25.3",
     "short-uuid": "^4.2.2",
     "sirv": "^1.0.0",
-    "sqlite3": "^5.1.2"
+    "sqlite3": "^5.1.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^1.0.10",

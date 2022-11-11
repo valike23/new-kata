@@ -2,6 +2,7 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { Category } from "./category";
+import { Entry } from "./entries";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -50,6 +51,7 @@ Competition.init({
 
 
 Competition.hasMany(Category);
+Competition.hasMany(Entry);
 Competition.sync();
 export const createCompetition = async (competition: Icompetition)=>{
     try {

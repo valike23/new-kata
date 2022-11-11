@@ -1,5 +1,6 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import type { ImodelResp } from "../functions/severShared";
+import { Category } from "./category";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -8,8 +9,12 @@ const sequelize = new Sequelize({
 export interface Ientry {
     id?: number;
     name?: string;
+    categoryName?: string;
+    clubName?: string;
+    flag?: string;
     categoryId?: string;
     clubId?: number;
+    competitionId?: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -19,6 +24,7 @@ export class Entry extends Model {
     declare name: string;
     declare categoryId: number;
     declare clubId: number;
+    declare competitionId: number;
 
 }
 
@@ -39,7 +45,12 @@ Entry.init({
         type: DataTypes.BIGINT,
         
 
-    },
+    }, 
+     competitionId:{
+      type: DataTypes.BIGINT,
+      
+
+  },
     clubId:{
         type: DataTypes.BIGINT,
         
@@ -47,7 +58,6 @@ Entry.init({
     }
    
 },{sequelize, modelName: 'entry'});
-
 Entry.sync();
 
 export const addEntry =async (entry: Ientry): Promise<ImodelResp> =>{

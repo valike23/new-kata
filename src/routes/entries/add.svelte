@@ -22,6 +22,7 @@
   } from "../../functions/browserFunctions";
   export let resp, resp2;
   const categories = resp.categories;
+  console.log(categories);
   let loading = false;
   let competitor = {
     name: "",
@@ -56,9 +57,9 @@
         loading = true;
         const form = new FormData();
         form.append('body', JSON.stringify(competitor));
-        const resp = await (await axios.post('api/entries/single', form)).data;
+        const resp = await (await axios.post('api/entries', form)).data;
         if(resp.status == 'success'){
-            loading = fale;
+            loading = false;
             handleNotification(window, 'competitor added successfully', EnotificationType.SUCCESS,()=>{goto('/entries')}, goto);
         }
         else {

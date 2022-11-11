@@ -1,6 +1,6 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { Entry } from "./entries";
+import { Entry, Ientry } from "./entries";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -11,6 +11,7 @@ export interface Icategory {
     categoryName?: string;
     gender?: string;
     competitionId?: number;
+    entries?: Ientry[];
     createdAt?: Date;
     updatedAt?: Date;
 }

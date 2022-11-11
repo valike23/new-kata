@@ -3,7 +3,7 @@
 
 
     const gohome = ()=>{
-        goto("/");
+        location.href ="/";
     }
     const goback =()=>{
         history.back();
