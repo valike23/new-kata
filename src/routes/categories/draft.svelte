@@ -18,6 +18,12 @@
 
 
 export let entries, seeding, id, name;
+console.log(entries);
+let seed;
+
+const fixSeed = ()=>{
+  console.log(seed);
+}
 
 
   </script>
@@ -33,6 +39,28 @@ export let entries, seeding, id, name;
 
 <div class="row">
     <div class="cell-3">
+      <div  class="text-center">
+        <button class="button primary">4</button>
+
+        <button class="button primary">8</button>
+      </div>
+     <div class="row">
+      <div class="cell-10">
+        <select  bind:value={seed} data-role="select">
+          <option disabled selected data-template="<span class='mif-amazon icon'></span> $1">Pick Seeds</option>
+          {#each entries as entry, i}
+            
+          <option value="{i}" data-template="<img style='width:20px; margin-right:5px' src='{entry.flag}'/> $1">  { "  " + entry.name}</option>
+          {/each}
+      </select>
+      </div>
+      <div class="cell-2">
+        <button on:click={fixSeed} class="button primary">Add Seed</button>
+      </div>
+     </div>
+
+     <!-- show the list of seeds here -->
+
 
     </div>
     <div class="cell-9">
@@ -41,3 +69,7 @@ export let entries, seeding, id, name;
 </div>
 
 </div>
+
+<style>
+ 
+</style>
