@@ -72,3 +72,7 @@ export async function put(req, res){
         
     }
 }
+
+export async function del(req, res) {
+    
+}

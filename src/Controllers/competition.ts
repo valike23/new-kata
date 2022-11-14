@@ -78,3 +78,4 @@ export const retrieveAllCompetition  =async (): Promise<Icompetition[]>=> {
         return [];
     }
 }
+

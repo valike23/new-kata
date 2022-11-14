@@ -75,10 +75,10 @@
 			>
 				<span class="mif-wind icon" />
 			</div>
-			<div data-role="tile" class="bg-cyan fg-white">
+			<a href="/entries" data-role="tile" class="bg-cyan fg-white">
 				<span class="mif-table icon" />
-				<span class="branding-bar">Tables</span>
-			</div>
+				<span class="branding-bar">Entries</span>
+			</a>
 		</div>
 
 		<div
