@@ -15,7 +15,7 @@ export  async function post (req, res) {
             console.log('active here:', activeCompetition);
             body.competitionId = activeCompetition.id;
             const data = await addEntry(body);
-            console.log(data);
+            console.log(data, body);
             res.json(data);
         }
        
@@ -28,7 +28,7 @@ export  async function post (req, res) {
 }
 export async function put(req, res){
     try {
-        const categoryId = req.query.id;
+        const categoryId = Number(req.query.id);
         const workbook = readFile(req.files.excel.path);
         const activeCompetition = await  Competition.findOne({where:{active: true}});
         const clubs = await Club.findAll();
@@ -48,8 +48,15 @@ export async function put(req, res){
               
             });
 
-           const resp = await  Entry.bulkCreate(sheet);
-           res.json(resp);
+       try {
+        console.log('the final sheet', sheet);
+        const resp = await  Entry.bulkCreate(sheet);
+    
+        res.json(resp);
+       } catch (error) {
+        console.log(error);
+        res.status(503).json(error);
+       }
         }
        }
 
@@ -68,11 +75,12 @@ export async function get(req, res){
         if(clubs){
             const activeCompetition = await  Competition.findOne({where:{active: true}});
             if(activeCompetition){
+                
                const categories = await Category.findAll({where:{competitionId: activeCompetition.id},
                  include:[{model: Entry}]});
-               
                 const entries = [];
-                categories.forEach((category: Icategory)=>{
+                categories.forEach((category: Icategory, i)=>{
+                    
                     category.entries.forEach((entry)=>{
                         let myEntry: Ientry = {};
                         myEntry.id = entry.id;
@@ -93,7 +101,8 @@ export async function get(req, res){
                         entries.push(myEntry);
                        
                     })
-                })
+                });
+                console.log('entries', entries);
                 res.json(entries);
             }
 

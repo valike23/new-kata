@@ -58,6 +58,7 @@ Entry.init({
     }
    
 },{sequelize, modelName: 'entry'});
+
 Entry.sync();
 
 export const addEntry =async (entry: Ientry): Promise<ImodelResp> =>{

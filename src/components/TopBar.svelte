@@ -3,7 +3,7 @@
 
 
     const gohome = ()=>{
-        location.href ="/";
+        goto('/');
     }
     const goback =()=>{
         history.back();
@@ -12,9 +12,9 @@
 
 <!-- svelte-ignore missing-declaration -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="row mt-2" on:click={goback}>
+<div class="row mt-2" >
     <div class="cell-2">
-        <span class="mif-arrow-left mif-3x" />
+        <span on:click={goback} class="mif-arrow-left mif-3x" />
     </div>
 
     <div class="cell-8" />

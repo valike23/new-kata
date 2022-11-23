@@ -22,6 +22,7 @@
   } from "../../functions/browserFunctions";
   export let resp, resp2;
   const categories = resp.categories;
+  let myCategory;
   console.log(categories);
   let loading = false;
   let competitor = {
@@ -37,21 +38,7 @@
   let name = "";
   let isBulk = false;
 
-  const readFile = (files) => {
-    console.log(files);
-    if (files) {
-      if (url) {
-        //to stop memory leaks
-        URL.revokeObjectURL(url);
-      }
-      console.log(files[0]);
-      fileName = files[0].name;
-      url = URL.createObjectURL(files[0]);
-      const upload = document.getElementById("small");
-      console.log(url);
-      upload.src = url;
-    }
-  };
+
   const submit = async () => {
     try {
         loading = true;
@@ -77,28 +64,28 @@
   const bulkSubmit = async () => {
     try {
       const form = new FormData();
-      if (files) form.append("files", files[0]);
+      if (files) form.append("excel", files[0]);
       form.append(
         "body",
         JSON.stringify({
           competitionName: name,
         })
       );
-      const axiosResp = await axios.post("api/competition", form);
-      if (axiosResp.data.status == "success") {
+      const axiosResp = await axios.put("api/entries?id=" + myCategory, form);
+      if (axiosResp.data) {
         handleNotification(
           window,
-          "competition was created successfully",
+          "competitiors list was created successfully",
           EnotificationType.SUCCESS,
           () => {
-            goto("/competition");
+            goto("/entries");
           },
-          goto
+        
         );
       } else {
         handleNotification(
           window,
-          "oops!!! competition was not created successfully",
+          "oops!!! competitiors list was not created successfully",
           EnotificationType.ERROR
         );
       }
@@ -116,9 +103,7 @@
     const file = document.getElementById("file");
     file.click();
   };
-  $: {
-    readFile(files);
-  }
+
 
   const switchTo = (text) => {
     if (text == "single") isBulk = false;
@@ -166,7 +151,7 @@
           <div class="cell-6">
             <div class="form-group">
               <label for="name">Pick Category</label>
-              <select required class="metro-input" id="category">
+              <select bind:value={myCategory} required class="metro-input" id="category">
                 <option disabled selected>Pick a category</option>
                 {#each categories as category}
                   <option value={category.id}>{category.categoryName}</option>

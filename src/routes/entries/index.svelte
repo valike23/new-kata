@@ -12,7 +12,6 @@ console.log('new activation', entries);
 
 <script >
   import TopBar from "../../components/TopBar.svelte";
-  import { EnotificationType, handleNotification } from "../../functions/browserFunctions";
   export let entries;
     console.log(entries);
 

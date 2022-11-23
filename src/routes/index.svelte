@@ -23,7 +23,7 @@
 	<script defer src="js/dashboard.js"></script>
 </svelte:head>
 <div class="container-fluid start-screen h-100">
-	<h1 class="start-screen-title">Start</h1>
+	<h1 class="start-screen-title">KATA project</h1>
 
 	<div class="tiles-area clear">
 		<div
@@ -55,26 +55,12 @@
 			</a>
 		
 
-			<div data-role="tile" data-size="small">
-				<span class="mif-apple icon" />
-			</div>
-			<div data-role="tile" data-size="small" class="bg-red fg-white">
-				<span class="mif-bell icon" />
-			</div>
-			<div
-				data-role="tile"
-				data-size="small"
-				class="bg-teal fg-white col-1 row-6"
-			>
-				<span class="mif-windows icon" />
-			</div>
-			<div
-				data-role="tile"
-				data-size="small"
-				class="bg-brown fg-white col-2 row-6"
-			>
-				<span class="mif-wind icon" />
-			</div>
+		
+			<a href="/clubs" data-role="tile" class="bg-cyan fg-white">
+				<span class="mif-flag icon" />
+				<span class="branding-bar">Clubs</span>
+			</a>
+			
 			<a href="/entries" data-role="tile" class="bg-cyan fg-white">
 				<span class="mif-table icon" />
 				<span class="branding-bar">Entries</span>
@@ -108,7 +94,7 @@
 				<div class="slide" data-cover="images/kata.jpg" />
 				<div class="slide" data-cover="images/kata2.jpeg" />
 				<div class="slide" data-cover="images/kata3.jpeg" />
-				<span class="branding-bar">Gallery</span>
+				<span class="branding-bar">Competition Control</span>
 			</div>
 			<div data-role="tile" data-size="wide" data-effect="image-set">
 				<img src="../../images/jeki_chan.jpg" />

@@ -55,7 +55,7 @@ Competition.hasMany(Entry);
 Competition.sync();
 export const createCompetition = async (competition: Icompetition)=>{
     try {
-     const resp = await   Competition.create(competition as any);
+     const resp = await Competition.create(competition as any);
      return {
         status: 'success',
         body: resp
