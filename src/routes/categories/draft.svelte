@@ -12,8 +12,10 @@
 </script>
 
 <script>
-  import { onMount } from "svelte";
+    import axios from "axios";
 
+  import { onMount } from "svelte";
+import {goto} from "@sapper/app";
   import TopBar from "../../components/TopBar.svelte";
   import {
     EnotificationType,
@@ -180,6 +182,25 @@
     }
   };
   generatePool();
+  const submitDraft =async ()=>{
+    console.log(pools);
+    let promises =[];
+    pools.forEach((pool)=>{
+      pool.categoryId = id;
+      let form = new FormData();
+      form.append('body',JSON.stringify(pool));
+      promises.push(axios.post('api/pools', form)); 
+    });
+  const resp = await Promise.all(promises);
+  if(resp){
+    if(resp[0].data.status == 'success'){
+      handleNotification(window, 'upload successful', 
+      EnotificationType.SUCCESS,
+      ()=>{goto('/pools')}, goto);
+    }
+    console.log(resp);
+  }
+  }
   onMount(() => {});
 </script>
 
@@ -269,7 +290,9 @@
           >
         </div>
         <div class="cell-6">
-          <button {disabled} class="button large primary">Upload Draft</button>
+          <button {disabled}
+          on:click={submitDraft}
+           class="button large primary">Upload Draft</button>
         </div>
       </div>
     </div>

@@ -74,5 +74,10 @@ export async function put(req, res){
 }
 
 export async function del(req, res) {
-    
+    try {
+     const resp = await Competition.destroy({where:{id: req.query.id}});
+     res.json(resp);
+    } catch (error) {
+       res.status(503).json(error);
+    }
 }

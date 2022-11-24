@@ -56,12 +56,16 @@ Pool.init({
   }
  
 },{sequelize, modelName: 'pool'});
-const poolEntries = sequelize.define('pool_entries', {
+export const poolEntries = sequelize.define('pool_entries', {
   total: DataTypes.DECIMAL,
   ATH: DataTypes.DECIMAL,
   TEC: DataTypes.DECIMAL,
   status:{type: DataTypes.SMALLINT, defaultValue: 0}
 }, { timestamps: false });
 Pool.belongsToMany(Entry,{through: poolEntries});
-Entry.belongsToMany(Pool, {through: poolEntries})
+Entry.belongsToMany(Pool, {through: poolEntries});
+
 Pool.sync();
+poolEntries.sync();
+
+

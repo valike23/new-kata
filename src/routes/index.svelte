@@ -69,31 +69,17 @@
 
 		<div
 			class="tiles-grid tiles-group size-2 fg-white"
-			data-group-title="Images"
+			data-group-title="competition Manager"
 		>
-			<div data-role="tile" data-cover="images/kata.jpg">
-				<span class="branding-bar">Sergey Pimenov</span>
-			</div>
-			<div
-				data-role="tile"
-				data-effect="animate-fade"
-				data-effect-duration="1000"
-			>
-				<div class="slide" data-cover="images/kata.jpg" />
-				<div class="slide" data-cover="images/kata2.jpeg" />
-				<div class="slide" data-cover="images/kata3.jpeg" />
-				<span class="branding-bar">Gallery</span>
-			</div>
+			<a href="/pools" data-role="tile" data-size="wide" data-cover="images/kata.jpg">
+				<span class="branding-bar">Pools</span>
+			</a>
+			
 			<div
 				data-role="tile"
 				data-size="wide"
-				data-effect="animate-slide-left"
 			>
-				<div class="slide" data-cover="../../images/1.jpg" />
-				<div class="slide" data-cover="../../images/2.jpg" />
-				<div class="slide" data-cover="images/kata.jpg" />
-				<div class="slide" data-cover="images/kata2.jpeg" />
-				<div class="slide" data-cover="images/kata3.jpeg" />
+			<span class="mif-gamepad icon" />
 				<span class="branding-bar">Competition Control</span>
 			</div>
 			<div data-role="tile" data-size="wide" data-effect="image-set">

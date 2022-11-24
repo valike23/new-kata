@@ -26,6 +26,8 @@
   console.log(categories);
 
   const draftPools = async (category) => {
+    if(category.isDrafted) return handleNotification(window,
+    'this category has already being drafted', EnotificationType.ERROR);
    const swal = await Swal.fire({
       title: "<strong>seeding</strong>",
       icon: "info",

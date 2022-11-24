@@ -21,7 +21,28 @@
     const openAddCompetition = () => {
        goto('competition/add');
     };
+const deleteCompetition =async (competition)=>{
+try {
+   const resp = await axios.delete('api/competition?id=' + competition.id);
+   if(resp){
+    handleNotification(window,
+    'competition deleted successfully',
+     EnotificationType.SUCCESS);
 
+     competitions.forEach((comp, i)=>{
+        if(comp.id == competition.id){
+            competitions.splice(i,1);
+        }
+     });
+     competitions = competitions;
+   };
+   
+} catch (error) {
+    handleNotification(window, 'competition failed to create',
+    EnotificationType.error);
+    console.log(error);
+}
+}
     const activateCompetition =async (competition, i)=>{
         try {
           const axiosResp = await  (await axios.put('api/competition?id='+ competition.id)).data;
@@ -92,7 +113,7 @@
                                     ><button on:click={()=>{activateCompetition(competition, i)}} class="button primary square " title="make this competition active">
                                         <span class="mif-checkmark" />
                                     </button>
-                                    <button class="button alert square ">
+                                    <button on:click={()=>{deleteCompetition(competition)}} class="button alert square ">
                                         <span class="mif-bin" />
                                     </button>
                                 </td>

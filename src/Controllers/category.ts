@@ -1,6 +1,7 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { Entry, Ientry } from "./entries";
+import { Pool } from "./pools";
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -11,6 +12,7 @@ export interface Icategory {
     categoryName?: string;
     gender?: string;
     competitionId?: number;
+    isDrafted?: boolean;
     entries?: Ientry[];
     createdAt?: Date;
     updatedAt?: Date;
@@ -18,6 +20,7 @@ export interface Icategory {
   export class Category extends Model {
     declare id: number;
     declare categoryName: string;
+    declare isDrafted: boolean;
     declare competitionId: number;
     declare gender: string
   };
@@ -38,6 +41,10 @@ Category.init({
     },
     competitionId:{
         type: DataTypes.BIGINT,
+    },
+    isDrafted:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
         
 
     },
@@ -49,6 +56,7 @@ Category.init({
 },{sequelize, modelName: 'category'});
 
 Category.hasMany(Entry);
+Category.hasMany(Pool);
 
 Category.sync();
 
