@@ -12,13 +12,15 @@
 
 <script>
     import TopBar from "../../components/TopBar.svelte";
+    import {goto} from "@sapper/app";
     export let pools;
+    
 
     const deletePool =(pool)=>{
 
     }
     const viewPool =(pool)=>{
-
+        goto('pools/views?id=' + pool.id);
     }
 </script>
 
